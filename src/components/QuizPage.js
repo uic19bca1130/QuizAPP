@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { navigate , useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function QuizPage() {
@@ -53,12 +53,13 @@ function QuizPage() {
   }
 
   if (error) {
-    return <div>Something went wrong with the API.</div>;
+    return <div>Something went wrong with the API Please try again later.</div>;
   }
 
   if (!questions || currentQuestion >= questions.length) {
     return <div>Question not found</div>;
   }
+
 
   return (
     <div className="quiz-page">

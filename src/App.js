@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter , Route, Routes} from "react-router-dom";
+import { BrowserRouter , Route,Routes} from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import QuizPage from "./components/QuizPage";
 import ResultPage from "./components/ResultPage";
