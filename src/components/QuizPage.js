@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -17,6 +17,7 @@ function QuizPage() {
   const handleAnswerButtonClick = (isCorrect) => {
     if (isCorrect) {
       setScore(score + 1);
+      console.log(score);
     }
     const nextQuestion = currentQuestion + 1;
     if (nextQuestion < questions.length) {
@@ -24,6 +25,7 @@ function QuizPage() {
     } else {
       setShowScore(true);
     }
+    
   };
 
   useEffect(() => {
@@ -43,7 +45,7 @@ function QuizPage() {
         setError('Failed to fetch questions. Please try again later.');
         setIsLoading(false);
       });
-      
+
   }
 
 
@@ -58,7 +60,7 @@ function QuizPage() {
   }
 
   if (error) {
-    return <div>Something went wrong with the API Please try again later.</div>;
+    return <div>Something went wrong with the API</div>;
   }
 
   if (!questions || currentQuestion >= questions.length) {
@@ -74,7 +76,7 @@ function QuizPage() {
           <h1>
             You scored {score} out of {questions.length}!
           </h1>
-          <button onClick={() => navigate('/ResultPage')}>Go back to homepage</button>
+          <button onClick={() => navigate('/ResultPage')}>Go back to ResultPage</button>
         </div>
       ) : (
         <>
