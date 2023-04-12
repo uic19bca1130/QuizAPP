@@ -68,7 +68,7 @@ function QuizPage() {
           <h1>
             You scored {score} out of {questions.length}!
           </h1>
-          <button onClick={() => navigate('/LandingPage')}>Go back to homepage</button>
+          <button onClick={() => navigate('/QuizPage')}>Go back to homepage</button>
         </div>
       ) : (
         <>
