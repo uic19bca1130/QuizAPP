@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+
+
 function QuizPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -28,6 +30,7 @@ function QuizPage() {
     getAllQuestions();
   }, []);
 
+
   function getAllQuestions() {
     axios
       .get('http://localhost:8080/api/questions')
@@ -36,11 +39,13 @@ function QuizPage() {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log(error);
-        setError(true);
+        console.error('Failed to fetch questions:', error);
+        setError('Failed to fetch questions. Please try again later.');
         setIsLoading(false);
       });
+      
   }
+
 
   useEffect(() => {
     if (questions.length === 0) {
@@ -59,6 +64,7 @@ function QuizPage() {
   if (!questions || currentQuestion >= questions.length) {
     return <div>Question not found</div>;
   }
+  console.log(questions[currentQuestion].options)
 
 
   return (
@@ -68,7 +74,7 @@ function QuizPage() {
           <h1>
             You scored {score} out of {questions.length}!
           </h1>
-          <button onClick={() => navigate('/QuizPage')}>Go back to homepage</button>
+          <button onClick={() => navigate('/ResultPage')}>Go back to homepage</button>
         </div>
       ) : (
         <>
@@ -76,13 +82,14 @@ function QuizPage() {
             <div className="question-count">
               <span>Question {currentQuestion + 1}</span>/{questions.length}
             </div>
-            <div className="question-text">{questions[currentQuestion].question}</div>
+            <div className="question-text">{questions[currentQuestion].text}</div>
           </div>
           <div className="answer-section">
-            {questions[currentQuestion].answers &&
-              questions[currentQuestion].answers.map((answer, index) => (
+            {questions[currentQuestion].options &&
+              questions[currentQuestion].options.map((answer, index) => (
                 <button key={index} onClick={() => handleAnswerButtonClick(answer.isCorrect)}>
-                  {answer.answerText}
+                  {answer}
+
                 </button>
               ))}
           </div>

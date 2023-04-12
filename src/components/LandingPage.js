@@ -2,10 +2,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function LandingPage() {
-  const navigate = useNavigate(); // Initialize useHistory hook to allow redirect to quiz page
+  const navigate = useNavigate(); 
 
   const handleClick = () => {
-    navigate('/QuizPage'); // Navigate to quiz page when button is clicked
+    navigate('/QuizPage'); 
   };
 
   return (
