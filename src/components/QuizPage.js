@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-
 function QuizPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -14,24 +13,26 @@ function QuizPage() {
 
   const navigate = useNavigate();
 
-  const handleAnswerButtonClick = (isCorrect) => {
-    if (isCorrect) {
-      setScore(score + 1);
-      console.log(score);
+  const handleAnswerButtonClick = (answer) => {
+    //console.log(questions[currentQuestion].answer);
+    debugger;
+    if (questions[currentQuestion].answer==answer) {
+      //console.log(answer);
+     setScore(score+1);
+      
     }
     const nextQuestion = currentQuestion + 1;
     if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
     } else {
+      //alert('you reached end of the quiz');
       setShowScore(true);
     }
-    
   };
 
   useEffect(() => {
     getAllQuestions();
   }, []);
-
 
   function getAllQuestions() {
     axios
@@ -66,7 +67,8 @@ function QuizPage() {
   if (!questions || currentQuestion >= questions.length) {
     return <div>Question not found</div>;
   }
-  console.log(questions[currentQuestion].options)
+  //console.log(questions[currentQuestion].answer)
+  console.log(score);
 
 
   return (
@@ -88,10 +90,9 @@ function QuizPage() {
           </div>
           <div className="answer-section">
             {questions[currentQuestion].options &&
-              questions[currentQuestion].options.map((answer, index) => (
-                <button key={index} onClick={() => handleAnswerButtonClick(answer.isCorrect)}>
-                  {answer}
-
+              questions[currentQuestion].options.map((option, index) => (
+                <button key={index} onClick={() => handleAnswerButtonClick(option)}>
+                  {option}
                 </button>
               ))}
           </div>
