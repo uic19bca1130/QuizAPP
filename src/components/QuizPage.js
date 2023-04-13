@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function QuizPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -9,17 +8,16 @@ function QuizPage() {
   const [showScore, setShowScore] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState();
 
   const navigate = useNavigate();
 
   const handleAnswerButtonClick = (answer) => {
     //console.log(questions[currentQuestion].answer);
-    debugger;
-    if (questions[currentQuestion].answer==answer) {
+    //debugger;
+    if (questions[currentQuestion].answer === answer) {
       //console.log(answer);
-     setScore(score+1);
-      
+      setScore(score + 1);
     }
     const nextQuestion = currentQuestion + 1;
     if (nextQuestion < questions.length) {
@@ -36,23 +34,21 @@ function QuizPage() {
 
   function getAllQuestions() {
     axios
-      .get('http://localhost:8080/api/questions')
+      .get("http://localhost:8080/api/questions")
       .then((response) => {
         setQuestions(response.data.data);
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error('Failed to fetch questions:', error);
-        setError('Failed to fetch questions. Please try again later.');
+        console.error("Failed to fetch questions:", error);
+        setError("Failed to fetch questions. Please try again later.");
         setIsLoading(false);
       });
-
   }
-
 
   useEffect(() => {
     if (questions.length === 0) {
-      navigate('/QuizPage');
+      navigate("/QuizPage");
     }
   }, [navigate, questions]);
 
@@ -69,7 +65,7 @@ function QuizPage() {
   }
   //console.log(questions[currentQuestion].answer)
   console.log(score);
-
+ 
 
   return (
     <div className="quiz-page">
@@ -78,7 +74,9 @@ function QuizPage() {
           <h1>
             You scored {score} out of {questions.length}!
           </h1>
-          <button onClick={() => navigate('/ResultPage')}>Go back to ResultPage</button>
+          <button onClick={() => navigate("/ResultPage")}>
+            Go back to HomePage
+          </button>
         </div>
       ) : (
         <>
@@ -86,12 +84,17 @@ function QuizPage() {
             <div className="question-count">
               <span>Question {currentQuestion + 1}</span>/{questions.length}
             </div>
-            <div className="question-text">{questions[currentQuestion].text}</div>
+            <div className="question-text">
+              {questions[currentQuestion].text}
+            </div>
           </div>
           <div className="answer-section">
             {questions[currentQuestion].options &&
               questions[currentQuestion].options.map((option, index) => (
-                <button key={index} onClick={() => handleAnswerButtonClick(option)}>
+                <button
+                  key={index}
+                  onClick={() => handleAnswerButtonClick(option)}
+                >
                   {option}
                 </button>
               ))}
